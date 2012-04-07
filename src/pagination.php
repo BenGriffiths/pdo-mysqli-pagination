@@ -10,7 +10,7 @@
  *
  * @author    Ben <ben@ben-griffiths.com>
  *
- * @copyright 2010 Ben Griffiths
+ * @copyright 2012 Ben Griffiths
  *
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
