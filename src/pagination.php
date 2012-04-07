@@ -1,7 +1,8 @@
 <?
 
 /**
- * This file handles pagination using either MySQLi or PDO
+ * This file handles pagination using either MySQLi or PDO, and outputs the pagination
+ * in the form of a UL
  *
  * Copyright (c) 2010 Ben Griffiths. All rights reserved.
  *
@@ -27,7 +28,7 @@ class pagination
      * @access public
      * @var    array
      */
-	protected $options = array(
+    protected $options = array(
         'results_per_page'              => 10,
         'max_pages_to_fetch'            => 1000000,
         'url'                           => '',
@@ -61,7 +62,7 @@ class pagination
      * @access protected
      * @var    array
      */
-	protected $debug_log;
+    protected $debug_log;
     
     
     /**
@@ -70,7 +71,7 @@ class pagination
      * @access public
      * @var    bool
      */
-	public $success = true;
+    public $success = true;
     
     
     /**
@@ -79,7 +80,7 @@ class pagination
      * @access protected
      * @var    int
      */
-	protected $current_page;
+    protected $current_page;
     
     
     /**
@@ -88,7 +89,7 @@ class pagination
      * @access protected
      * @var    string
      */
-	protected $query;
+    protected $query;
     
     
     /**
@@ -97,7 +98,7 @@ class pagination
      * @access protected
      * @var    int
      */
-	protected $number_of_links_before_showing_ellipses;
+    protected $number_of_links_before_showing_ellipses;
     
     
     /**
@@ -106,7 +107,7 @@ class pagination
      * @access public
      * @var    string
      */
-	protected $pdos;
+    protected $pdos;
     
     
     /**
@@ -115,7 +116,7 @@ class pagination
      * @access public
      * @var    resultset
      */
-	public $resultset;
+    public $resultset;
     
     
     /**
@@ -124,7 +125,7 @@ class pagination
      * @access public
      * @var    int
      */
-	public $total_results;
+    public $total_results;
     
     
     /**
@@ -133,7 +134,7 @@ class pagination
      * @access public
      * @var    int
      */
-	public $total_pages;
+    public $total_pages;
     
     
     /**
@@ -142,37 +143,37 @@ class pagination
      * @access public
      * @var    string
      */
-	public $links_html;
+    public $links_html;
 
 
    /**
     * __construct(int $surrent_page, string $query, array $options)
     *
-	* Class constructor
-	*
-	* @access  public
+    * Class constructor
+    *
+    * @access  public
     * @param   int     $current_page  The number of the current page (Starts at 1)
     * @param   string  $query         The query to run on the database
     * @param   array   $options       An array of options
-	* @return  void
-	*/
-	public function __construct($current_page = 1, $query = '', $options = null)
-	{
+    * @return  void
+    */
+    public function __construct($current_page = 1, $query = '', $options = null)
+    {
         $this->run($current_page, $query, $options);
-	}
+    }
     
     
     /**
     * run(int $surrent_page, string $query, array $options)
     *
-	* Run the class
-	*
-	* @access  public
+    * Run the class
+    *
+    * @access  public
     * @param   int     $current_page  The number of the current page (Starts at 1)
     * @param   string  $query         The query to run on the database
     * @param   array   $options       An array of options
-	* @return  void
-	*/
+    * @return  void
+    */
     public function run($current_page = 1, $query = '', $options = null)
     {
         /*
@@ -238,12 +239,12 @@ class pagination
     /**
     * set_options(array $options)
     *
-	* Apply any options that have been provided
-	*
-	* @access  protected
+    * Apply any options that have been provided
+    *
+    * @access  protected
     * @param   array   $options  An array of options
-	* @return  void
-	*/
+    * @return  void
+    */
     protected function set_options($options = null)
     {
         if(!empty($options))
@@ -308,11 +309,11 @@ class pagination
     /**
     * prepare_query(void)
     *
-	* Prepares the query to be run with the found rows and start/end limits
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Prepares the query to be run with the found rows and start/end limits
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function prepare_query()
     {
         /*
@@ -340,11 +341,11 @@ class pagination
     /**
     * excecute_query(void)
     *
-	* Run's the query against the database
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Run's the query against the database
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function excecute_query()
     {
         if($this->options['db_conn_type'] == 'mysqli')
@@ -362,45 +363,45 @@ class pagination
             $this->total_results = $found_rows['FOUND_ROWS()'];
         }
         elseif($this->options['db_conn_type'] == 'pdo')
-        {	
-			if($this->options['using_bound_params'] == false)
-			{
-				/*
-				 * Execute using PDO - not using bindParams
-				 */
-				$pdos = $this->options['db_handle']->prepare($this->query);
-				
-				/*
-				 * Use plain method or bind some named params
-				 *
-				 * Using alternate styles to avoid any errors with empty arrays
-				 */
-				if($this->options['named_params'] == false)
-				{
-					$pdos->execute();
-				}
-				else
-				{
-					$pdos->execute($this->options['named_params']);
-				}
-				
-				$this->resultset = $pdos;
-				
-				/*
-				 * Get the total results with FOUND_ROWS()
-				 */
-				$pdos_fr = $this->options['db_handle']->prepare("SELECT FOUND_ROWS();");
-				$pdos_fr->execute();
-				$pdos_fr_result = $pdos_fr->fetch(PDO::FETCH_ASSOC);
-				$this->total_results = $pdos_fr_result['FOUND_ROWS()'];
-			}
-			else
-			{
-				/*
-				 * Excecute using PDO, but pause for binding params
-				 */
-				$this->pdos = $this->options['db_handle']->prepare($this->query);
-			}
+        {    
+            if($this->options['using_bound_params'] == false)
+            {
+                /*
+                 * Execute using PDO - not using bindParams
+                 */
+                $pdos = $this->options['db_handle']->prepare($this->query);
+                
+                /*
+                 * Use plain method or bind some named params
+                 *
+                 * Using alternate styles to avoid any errors with empty arrays
+                 */
+                if($this->options['named_params'] == false)
+                {
+                    $pdos->execute();
+                }
+                else
+                {
+                    $pdos->execute($this->options['named_params']);
+                }
+                
+                $this->resultset = $pdos;
+                
+                /*
+                 * Get the total results with FOUND_ROWS()
+                 */
+                $pdos_fr = $this->options['db_handle']->prepare("SELECT FOUND_ROWS();");
+                $pdos_fr->execute();
+                $pdos_fr_result = $pdos_fr->fetch(PDO::FETCH_ASSOC);
+                $this->total_results = $pdos_fr_result['FOUND_ROWS()'];
+            }
+            else
+            {
+                /*
+                 * Excecute using PDO, but pause for binding params
+                 */
+                $this->pdos = $this->options['db_handle']->prepare($this->query);
+            }
         }
         else
         {
@@ -415,70 +416,70 @@ class pagination
     /**
     * bind(standard params)
     *
-	* Bind params to the query
-	*
-	* @access  public
-	* @param   multi   Typical bindParam attr
-	* @return  void
-	*/
-	public function bindParam($a = null, $b = null, $c = null, $d = null, $e = null)
-	{
-		$this->pdos->bindParam($a, $b, $c, $d, $e);
-	}
+    * Bind params to the query
+    *
+    * @access  public
+    * @param   multi   Typical bindParam attr
+    * @return  void
+    */
+    public function bindParam($a = null, $b = null, $c = null, $d = null, $e = null)
+    {
+        $this->pdos->bindParam($a, $b, $c, $d, $e);
+    }
     
     
     /**
     * execute(void)
     *
-	* Continues the execution of the query after binding params
-	*
-	* @access  public
-	* @return  void
-	*/
-	public function execute()
-	{
-		$this->pdos->execute();
-		
-		$this->resultset = $this->pdos;
-		
-		/*
-		 * Get the total results with FOUND_ROWS()
-		 */
-		$pdos_fr = $this->options['db_handle']->prepare("SELECT FOUND_ROWS();");
-		$pdos_fr->execute();
-		$pdos_fr_result = $pdos_fr->fetch(PDO::FETCH_ASSOC);
-		$this->total_results = $pdos_fr_result['FOUND_ROWS()'];
-		
-		/*
-		 * Calculate the total number of pages
-		 */
-		$this->calculate_number_of_pages();
-		
-		/*
-		 * Work out the total number of pages before an ellipses is shown
-		 */
-		$this->calculate_max_pages_before_ellipses();
-		
-		/*
-		 * Build the HTML to output
-		 */
-		$this->build_links();
-		
-		/*
-		 * Set success to true
-		 */
-		$this->success = true;
-	}
+    * Continues the execution of the query after binding params
+    *
+    * @access  public
+    * @return  void
+    */
+    public function execute()
+    {
+        $this->pdos->execute();
+        
+        $this->resultset = $this->pdos;
+        
+        /*
+         * Get the total results with FOUND_ROWS()
+         */
+        $pdos_fr = $this->options['db_handle']->prepare("SELECT FOUND_ROWS();");
+        $pdos_fr->execute();
+        $pdos_fr_result = $pdos_fr->fetch(PDO::FETCH_ASSOC);
+        $this->total_results = $pdos_fr_result['FOUND_ROWS()'];
+        
+        /*
+         * Calculate the total number of pages
+         */
+        $this->calculate_number_of_pages();
+        
+        /*
+         * Work out the total number of pages before an ellipses is shown
+         */
+        $this->calculate_max_pages_before_ellipses();
+        
+        /*
+         * Build the HTML to output
+         */
+        $this->build_links();
+        
+        /*
+         * Set success to true
+         */
+        $this->success = true;
+    }
     
     
     /**
     * calculate_number_of_pages(void)
     *
-	* Calculates how many pages there will be
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Calculates how many pages there will be
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function calculate_number_of_pages()
     {
         if(ceil($this->total_results / $this->options['results_per_page']) > $this->options['max_pages_to_fetch'])
@@ -495,26 +496,26 @@ class pagination
     /**
     * calculate_max_pages_before_ellipses(void)
     *
-	* Calculates the number of links to show before showing an ellipses
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Calculates the number of links to show before showing an ellipses
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function calculate_max_pages_before_ellipses()
-	{
-		$this->number_of_links_before_showing_ellipses = $this->options['max_links_between_ellipses'] + ($this->options['max_links_outside_ellipses'] * 2);
-	}
+    {
+        $this->number_of_links_before_showing_ellipses = $this->options['max_links_between_ellipses'] + ($this->options['max_links_outside_ellipses'] * 2);
+    }
     
     
     /**
     * build_link_url(int $page_number)
     *
-	* Builds the URL to insert in links
-	*
-	* @access  protected
+    * Builds the URL to insert in links
+    *
+    * @access  protected
     * @param   int     $page_number  The page number to insert into the link
-	* @return  string                The built URL
-	*/
+    * @return  string                The built URL
+    */
     protected function build_link_url($page_number)
     {
         return str_replace($this->options['url_page_number_var'], $page_number, $this->options['url']);
@@ -524,12 +525,12 @@ class pagination
     /**
     * get_current_or_normal_class(int $page_number)
     *
-	* Returns the live link class, or link link and current page class
-	*
-	* @access  protected
+    * Returns the live link class, or link link and current page class
+    *
+    * @access  protected
     * @param   int     $page_number  The page number to insert into the link
-	* @return  string                The class to use
-	*/
+    * @return  string                The class to use
+    */
     protected function get_current_or_normal_class($page_number)
     {
         if($page_number == $this->current_page)
@@ -546,11 +547,11 @@ class pagination
     /**
     * build_links(void)
     *
-	* Build the HTML links
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Build the HTML links
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links()
     {
         /*
@@ -573,17 +574,17 @@ class pagination
              * We have enough links to show the ellipses, so run through other method
              */
             if($this->current_page <= (($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses'])) - 2)
-			{
+            {
                 $this->build_links_skip_first_ellipses();
             }
             elseif($this->current_page > (($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses']) - 2) && $this->current_page < (($this->total_pages - ($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses']) + 1) + 2))
             {
                 $this->build_links_dont_skip_ellipses();
             }
-			else
-			{
+            else
+            {
                 $this->build_links_skip_last_ellipses();
-			}
+            }
         }
         
         
@@ -600,11 +601,11 @@ class pagination
     /**
     * build_links_first_prev(void)
     *
-	* Builds (if required) the First/Prev links
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Builds (if required) the First/Prev links
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links_first_prev()
     {
         /*
@@ -642,13 +643,13 @@ class pagination
     /**
     * loop_through_links(int $start, int $finish)
     *
-	* Loops through a given range of numbers and add's then as links in the html
-	*
-	* @access  protected
+    * Loops through a given range of numbers and add's then as links in the html
+    *
+    * @access  protected
     * @param   int     $start   The number to start looping
     * @param   int     $finish  The number to finish looping
-	* @return  void
-	*/
+    * @return  void
+    */
     protected function loop_through_links($start, $finish)
     {
         $counter = $start;
@@ -665,11 +666,11 @@ class pagination
     /**
     * add_ellipses(void)
     *
-	* Add's an ellipses to the html
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Add's an ellipses to the html
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function add_ellipses()
     {
         $this->links_html .= '<li><span class="'.$this->options['class_ellipses'].'">'.$this->options['text_ellipses'].'</span></li>'.PHP_EOL;
@@ -679,11 +680,11 @@ class pagination
     /**
     * build_links_skip_all_ellipses(void)
     *
-	* Add all links, with no ellipses at all
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Add all links, with no ellipses at all
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links_skip_all_ellipses()
     {
         /*
@@ -696,11 +697,11 @@ class pagination
     /**
     * build_links_skip_first_ellipses(void)
     *
-	* Add all links, without the first ellipses
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Add all links, without the first ellipses
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links_skip_first_ellipses()
     {
         /*
@@ -717,11 +718,11 @@ class pagination
     /**
     * build_links_dont_skip_ellipses(void)
     *
-	* Add all links, with both sets of ellipses
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Add all links, with both sets of ellipses
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links_dont_skip_ellipses()
     {
         /*
@@ -744,11 +745,11 @@ class pagination
     /**
     * build_links_dont_skip_ellipses(void)
     *
-	* Add all links, without the last ellipses
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Add all links, without the last ellipses
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links_skip_last_ellipses()
     {
         /*
@@ -765,11 +766,11 @@ class pagination
     /**
     * build_links_next_last(void)
     *
-	* Builds (if required) the Next/Last links
-	*
-	* @access  protected
-	* @return  void
-	*/
+    * Builds (if required) the Next/Last links
+    *
+    * @access  protected
+    * @return  void
+    */
     protected function build_links_next_last()
     {
         /*
@@ -807,11 +808,11 @@ class pagination
     /**
     * debug(void)
     *
-	* Show the debug log
-	*
-	* @access  public
-	* @return  void
-	*/
+    * Show the debug log
+    *
+    * @access  public
+    * @return  void
+    */
     public function debug()
     {
         echo '<pre>';
