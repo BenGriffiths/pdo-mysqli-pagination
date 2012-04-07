@@ -104,7 +104,7 @@ class pagination
      * The PDO object - stored when users want to bind some params
      *
      * @access public
-     * @var    string
+     * @var    object
      */
     protected $pdos;
     
@@ -113,7 +113,7 @@ class pagination
      * The resultset of the query
      *
      * @access public
-     * @var    resultset
+     * @var    resource
      */
     public $resultset;
     
