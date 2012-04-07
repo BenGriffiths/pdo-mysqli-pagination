@@ -67,8 +67,10 @@ $options = array(
 
 ## Using the class
 
-To use the class, you must pass at least 2 options if using PDO, or 3 if using MySQLi. The URL for the paginationd link, and the Database Object (Handle). If you are using MySQLi instead of PDO, you must also define that in the options.
-When using PDO you can call the class using a regular query, or you can use named params or bind params. After the full example below, I'll show you how to use the named params and bound params styles.
+To use the class, you must pass at least 2 options if using PDO, or 3 if using MySQLi. The URL for the pagination link, and the Database Object (Handle). If you are using MySQLi instead of PDO, you must also define that in the options.
+
+When using PDO you can call the class using a regular query, or you can use named params or bind params. After the full example below, you can see how to use the named params and bound params styles.
+
 Here's a full example on how to use the class, using PDO:
 
 ```php
