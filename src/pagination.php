@@ -12,6 +12,8 @@
  *
  * @copyright 2012 Ben Griffiths
  *
+ * @url       https://github.com/BenGriffiths/pdo-mysqli-pagination
+ *
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
