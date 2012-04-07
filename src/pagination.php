@@ -13,9 +13,6 @@
  * @copyright 2010 Ben Griffiths
  *
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- *
- * @version   $Id$
- *
  */
 
 class pagination
