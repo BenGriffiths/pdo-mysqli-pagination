@@ -30,9 +30,9 @@ $options = array(
     'show_links_prev_next'          => true,  
     'show_links_first_last_if_dead' => true,  
     'show_links_prev_next_if_dead'  => true,  
-    'max_links_between_ellipses'    => 7,  
+    'max_links_between_ellipses'    => 7,      // This MUST be an odd number, io things will break
     'max_links_outside_ellipses'    => 2,  
-    'db_conn_type'                  => 'pdo',  /* Can be either: 'mysqli' or 'pdo' */  
+    'db_conn_type'                  => 'pdo',  // Can be either: 'mysqli' or 'pdo'
     'db_handle'                     => 0  
     'named_params'                  => false,  
     'using_bound_params'            => false  
@@ -170,3 +170,10 @@ $pagination->bindParam(':param_b', 'bar');
 $pagination->execute();
 ?>
 ```
+
+
+## License
+
+Copyright (c) 2012 Ben Griffiths
+
+Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
