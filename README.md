@@ -7,6 +7,7 @@ PDO MySQLi Pagination class is a pagination class that will work with either PDO
 All you need to do is include the file, set the options, and then you can work with the data as is. Here's the different options that are available:
 
 ```php
+<?
 /* 
  * This is a list of all of the available options with the defaults: 
  */  
@@ -36,6 +37,7 @@ $options = array(
     'named_params'                  => false,  
     'using_bound_params'            => false  
 );
+?>
 ```
 
 ## Using the class
@@ -45,6 +47,7 @@ When using PDO you can call the class using a regular query, or you can use name
 Here's a full example on how to use the class, using PDO:
 
 ```php
+<?
 /* 
  * Include the class 
  */  
@@ -127,7 +130,8 @@ if($paginate->success == true)
      * Get the total number of results if you like 
      */  
     echo $paginate->total_results;  
-}  
+}
+?>
 ```
 
 ## Named Params in PDO
@@ -136,11 +140,13 @@ When using named params, you simply need to add the array to the options like so
 
 
 ```php
+<?
 $options = array(  
     'url'          => 'http://www.mysite.com/mypage.php?page=*VAR*',  
     'db_handle'    => $dbh,  
     'named_params' => array(':param_a' => 'foo', ':param_b' => 'bar')  
 );
+?>
 ```
 
 ## Bind Params in PDO
@@ -149,6 +155,7 @@ Binding params work's a little differently, you need to tell the class that you'
 
 
 ```php
+<?
 $options = array(  
     'url'                => 'http://www.mysite.com/mypage.php?page=*VAR*',  
     'db_handle'          => $dbh,  
@@ -161,4 +168,5 @@ $paginate->bindParam(':param_a', 'foo', PDO::PARAM_STR, 12);
 $paginate->bindParam(':param_b', 'bar');  
   
 $paginate->execute();
+?>
 ```
