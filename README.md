@@ -109,7 +109,7 @@ catch (PDOException $e)
   
   
 /* 
- * This is a list of all of the available options with the defaults: 
+ * Set the options
  */  
 $options = array(  
     'url'        => 'http://www.mysite.com/mypage.php?page=*VAR*',  
