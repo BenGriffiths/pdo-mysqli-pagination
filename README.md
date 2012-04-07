@@ -40,6 +40,8 @@ $options = array(
 ?>
 ```
 
+Here's the full list of options, and the descriptions for each:
+
 * __results_per_page__: The total number of results to show per page
 * __max_pages_to_fetch__: You can limit the number of pages to fetch in total here
 * __url__: The base URL to use in links
