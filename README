@@ -2,7 +2,7 @@
 All you need to do is include the file, set the options, and then you can work with the data as is. Here's the different options that are available:
 
 
-```
+```php
 /* 
  * This is a list of all of the available options with the defaults: 
  */  
