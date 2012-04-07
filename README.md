@@ -42,7 +42,7 @@ $options = array(
 
 ## Using the class
 
-To use the class, you must pass at least 2 options if using PDO, or 3 if using MySQLi. The URL for the paginated link, and the Database Object (Handle). If you are using MySQLi instead of PDO, you must also define that in the options.
+To use the class, you must pass at least 2 options if using PDO, or 3 if using MySQLi. The URL for the paginationd link, and the Database Object (Handle). If you are using MySQLi instead of PDO, you must also define that in the options.
 When using PDO you can call the class using a regular query, or you can use named params or bind params. After the full example below, I'll show you how to use the named params and bound params styles.
 Here's a full example on how to use the class, using PDO:
 
@@ -51,7 +51,7 @@ Here's a full example on how to use the class, using PDO:
 /* 
  * Include the class 
  */  
-require_once('path/to/paginate.php');  
+require_once('path/to/pagination.php');  
   
   
 /* 
@@ -93,20 +93,20 @@ $options = array(
 /* 
  * Call the class, the var's are: 
  * 
- * paginate(int $surrent_page, string $query, array $options) 
+ * pagination(int $surrent_page, string $query, array $options) 
  */  
-$paginate = new paginate($page, 'SELECT some_column FROM some_table ORDER BY some_other_column', $options);  
+$pagination = new pagination($page, 'SELECT some_column FROM some_table ORDER BY some_other_column', $options);  
   
   
 /* 
  * If all was successful, we can do something with our results 
  */  
-if($paginate->success == true)  
+if($pagination->success == true)  
 {  
     /* 
      * Get the results 
      */  
-    $result = $paginate->resultset->fetchAll();  
+    $result = $pagination->resultset->fetchAll();  
       
     foreach($result as $row)  
     {  
@@ -115,21 +115,21 @@ if($paginate->success == true)
       
       
     /* 
-     * Show the paginated links ( 1 2 3 4 5 6 7 ) etc. 
+     * Show the paginationd links ( 1 2 3 4 5 6 7 ) etc. 
      */  
-    echo $paginate->links_html;  
+    echo $pagination->links_html;  
       
       
     /* 
      * Get the total number if pages if you like 
      */  
-    echo $paginate->total_pages;  
+    echo $pagination->total_pages;  
       
       
     /* 
      * Get the total number of results if you like 
      */  
-    echo $paginate->total_results;  
+    echo $pagination->total_results;  
 }
 ?>
 ```
@@ -162,11 +162,11 @@ $options = array(
     'using_bound_params' => true  
 );  
   
-$paginate = new paginate($page, 'SELECT * FROM table WHERE field_a = :param_a AND field_b = :param_b', $options);  
+$pagination = new pagination($page, 'SELECT * FROM table WHERE field_a = :param_a AND field_b = :param_b', $options);  
   
-$paginate->bindParam(':param_a', 'foo', PDO::PARAM_STR, 12);  
-$paginate->bindParam(':param_b', 'bar');  
+$pagination->bindParam(':param_a', 'foo', PDO::PARAM_STR, 12);  
+$pagination->bindParam(':param_b', 'bar');  
   
-$paginate->execute();
+$pagination->execute();
 ?>
 ```
