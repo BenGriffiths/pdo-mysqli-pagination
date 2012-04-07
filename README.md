@@ -40,6 +40,31 @@ $options = array(
 ?>
 ```
 
+* __results_per_page__: The total number of results to show per page
+* __max_pages_to_fetch__: You can limit the number of pages to fetch in total here
+* __url__: The base URL to use in links
+* __url_page_number_var__: The variable which will be replaced with the page numbers in URL's
+* __text_prev__: The text for the 'Prev' link
+* __text_next__: The text for the 'Next' link
+* __text_first__: The text for the 'First' link
+* __text_last__: The text for the 'Last' link
+* __text_ellipses__: The text to use for the ellipses between the links
+* __class_ellipses__: The CSS class to apply to the ellipses elements
+* __class_dead_links__: The class to apply to dead links (i.e, if your on page 1, this would be applied to the 'Prev' link)
+* __class_live_links__: The class to apply to any regular links
+* __class_current_page__: The class to apply to the current page link
+* __class_ul__: The class to apply to the whole UL
+* __show_links_first_last__: Set to 1 to show the 'first/last' links
+* __show_links_prev_next__: Set to 1 to show the 'prev/next' links
+* __show_links_first_last_if_dead__: If the 'first/last' links are dead, set to 1 to still show them
+* __show_links_prev_next_if_dead__: If the 'prev/next' links are dead, set to 1 to still show them
+* __max_links_between_ellipses__: The total number of links to show on the indise of the ellipses (MUST be an odd number)
+* __max_links_outside_ellipses__: The total number of links to show on the outside of the ellipses
+* __db_conn_type__: Either 'pdo' (Default) or 'mysqli'
+* __db_handle__: The database handle object
+* __named_params__: An array for named params (See below)
+* __using_bound_params__: Set to true if you are using bound params in PDO
+
 ## Using the class
 
 To use the class, you must pass at least 2 options if using PDO, or 3 if using MySQLi. The URL for the paginationd link, and the Database Object (Handle). If you are using MySQLi instead of PDO, you must also define that in the options.
