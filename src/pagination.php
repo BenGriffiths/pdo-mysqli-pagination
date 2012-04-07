@@ -4,7 +4,7 @@
  * This file handles pagination using either MySQLi or PDO, and outputs the pagination
  * in the form of a UL
  *
- * Copyright (c) 2010 Ben Griffiths. All rights reserved.
+ * Copyright (c) 2012 Ben Griffiths. All rights reserved.
  *
  * @name      pagination
  *
