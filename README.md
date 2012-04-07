@@ -1,6 +1,10 @@
 # PDO and MySQLi Pagination Class
-All you need to do is include the file, set the options, and then you can work with the data as is. Here's the different options that are available:
 
+PDO MySQLi Pagination class is a pagination class that will work with either PDO, or MySQLi. There outputted pagination is served in an Unordered List, and the options are extensive.
+
+## Options
+
+All you need to do is include the file, set the options, and then you can work with the data as is. Here's the different options that are available:
 
 ```php
 /* 
@@ -34,12 +38,13 @@ $options = array(
 );
 ```
 
+## Using the class
 
 To use the class, you must pass at least 2 options if using PDO, or 3 if using MySQLi. The URL for the paginated link, and the Database Object (Handle). If you are using MySQLi instead of PDO, you must also define that in the options.
 When using PDO you can call the class using a regular query, or you can use named params or bind params. After the full example below, I'll show you how to use the named params and bound params styles.
 Here's a full example on how to use the class, using PDO:
 
-```
+```php
 /* 
  * Include the class 
  */  
@@ -125,11 +130,12 @@ if($paginate->success == true)
 }  
 ```
 
+## Named Params in PDO
 
 When using named params, you simply need to add the array to the options like so:
 
 
-```
+```php
 $options = array(  
     'url'          => 'http://www.mysite.com/mypage.php?page=*VAR*',  
     'db_handle'    => $dbh,  
@@ -137,11 +143,12 @@ $options = array(
 );
 ```
 
- 
+## Bind Params in PDO
+
 Binding params work's a little differently, you need to tell the class that you'll want to be binding params, and then bind them - the class will not execute the query automatically like it does in all other ways of functioning. I have kept the naming convention of bindParam to help make it easier to use the system without having to remember what the method names are. Once you're done binding, you can then execute manually:
 
 
-```
+```php
 $options = array(  
     'url'                => 'http://www.mysite.com/mypage.php?page=*VAR*',  
     'db_handle'          => $dbh,  
