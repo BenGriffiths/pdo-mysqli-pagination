@@ -1,6 +1,6 @@
 # PDO and MySQLi Pagination Class
 
-PDO MySQLi Pagination class is a pagination class that will work with either PDO, or MySQLi. There outputted pagination is served in an Unordered List, and the options are extensive.
+PDO MySQLi Pagination class is a pagination class that will work with either PDO, or MySQLi. The outputted pagination is served in an Unordered List, and the options are extensive.
 
 ## Options
 
