@@ -128,7 +128,15 @@ $options = array(
  * 
  * pagination(int $surrent_page, string $query, array $options) 
  */  
-$pagination = new pagination($page, 'SELECT some_column FROM some_table ORDER BY some_other_column', $options);  
+try
+{
+    $pagination = new pagination($page, 'SELECT some_column FROM some_table ORDER BY some_other_column', $options);  
+}
+catch(paginationException $e)
+{
+    echo $e;
+    exit();
+}
   
   
 /* 
@@ -194,8 +202,16 @@ $options = array(
     'db_handle'          => $dbh,  
     'using_bound_params' => true  
 );  
-  
-$pagination = new pagination($page, 'SELECT * FROM table WHERE field_a = :param_a AND field_b = :param_b', $options);  
+
+try
+{
+    $pagination = new pagination($page, 'SELECT * FROM table WHERE field_a = :param_a AND field_b = :param_b', $options);  
+}
+catch(paginationException $e)
+{
+    echo $e;
+    exit();
+}
   
 $pagination->bindParam(':param_a', 'foo', PDO::PARAM_STR, 12);  
 $pagination->bindParam(':param_b', 'bar');  
