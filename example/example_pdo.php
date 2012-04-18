@@ -77,7 +77,15 @@ $options = array(
 /*
  * Create the pagination object
  */
-$paginate = new pagination($page, 'SELECT * FROM demo_table ORDER BY id', $options);
+try
+{
+    $paginate = new pagination($page, 'SELECT * FROM demo_table ORDER BY id', $options);
+}
+catch(paginationException $e)
+{
+    echo $e;
+    exit();
+}
 
 
 /*

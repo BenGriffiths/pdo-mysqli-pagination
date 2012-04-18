@@ -16,7 +16,6 @@
  *
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 class pagination
 {
 
@@ -53,15 +52,6 @@ class pagination
         'named_params'                  => false,
         'using_bound_params'            => false
     );
-    
-    
-    /**
-     * An array of any errors
-     *
-     * @access protected
-     * @var    array
-     */
-    protected $debug_log;
     
     
     /**
@@ -223,11 +213,6 @@ class pagination
         else
         {
             /*
-             * Show the debug log to the user
-             */
-            $this->debug();
-            
-            /*
              * Set success to false
              */
             $this->success = false;
@@ -256,7 +241,7 @@ class pagination
                 }
                 else
                 {
-                    $this->debug_log[] = 'Attempted to add setting \''.$key.'\' with the value \''.$value.'\' - option does not exist';
+                    throw new paginationException('Attempted to add setting \''.$key.'\' with the value \''.$value.'\' - option does not exist');
                 }
             }
         }
@@ -266,7 +251,7 @@ class pagination
          */
         if(trim($this->options['url']) == '')
         {
-            $this->debug_log[] = 'You have not provided a URL - please pass one with the option \'url\'';
+            throw new paginationException('You have not provided a URL - please pass one with the option \'url\'');
             return false;
         }
         
@@ -275,7 +260,7 @@ class pagination
          */
         if(is_int($this->options['db_handle']) && $this->options['db_handle'] == 0)
         {
-            $this->debug_log[] = 'You have not provided a DB Handle (Object) - please pass one with the option \'db_handle\'';
+            throw new paginationException('You have not provided a DB Handle (Object) - please pass one with the option \'db_handle\'');
             return false;
         }
         
@@ -284,7 +269,7 @@ class pagination
          */
         if(!($this->options['max_links_between_ellipses'] & 1))
         {
-            $this->debug_log[] = 'Setting \'max_links_between_ellipses\' has been set with the value \''.$this->options['max_links_between_ellipses'].'\' - This number must be an odd number';
+            throw new paginationException('Setting \'max_links_between_ellipses\' has been set with the value \''.$this->options['max_links_between_ellipses'].'\' - This number must be an odd number');
             return false;
         }
         
@@ -294,7 +279,7 @@ class pagination
         $page_number_var_position = strpos($this->options['url'], $this->options['url_page_number_var']);
         if($page_number_var_position === false)
         {
-            $this->debug_log[] = 'You have not placed the variable in your URL that will be replaced with the page number - please add this variable where required: <strong>'.$this->options['url_page_number_var'].'<strong>';
+            throw new paginationException('You have not placed the variable in your URL that will be replaced with the page number - please add this variable where required: <strong>'.$this->options['url_page_number_var'].'<strong>');
             return false;
         }
         
@@ -407,7 +392,7 @@ class pagination
             /*
              * An unknown DB connection type has been set
              */
-            $this->debug_log[] = 'You have selected a \'db_conn_type\' of \''.$this->options['db_conn_type'].'\' - this method is not supported';
+            throw new paginationException('You have selected a \'db_conn_type\' of \''.$this->options['db_conn_type'].'\' - this method is not supported');
         }
     }
     
@@ -802,24 +787,39 @@ class pagination
             }
         }
     }
+
+}
+class paginationException extends Exception
+{
     
     
     /**
-     * debug(void)
+     * __construct(string $message)
      *
-     * Show the debug log
+     * Prepare the new exception class
      *
-     * @access  public
+     * @access  protected
+     * @param   string     $message  The exception message
      * @return  void
      */
-    public function debug()
+    public function __construct($message)
     {
-        echo '<pre>';
-        echo '<p>There appears to be a problem with the Paginate() options:</p>';
-        print_r($this->debug_log);
-        echo '</pre>';
+        parent::__construct($message);
     }
-
+    
+    
+    /**
+     * __toString(void)
+     *
+     * Return the message for the exception
+     *
+     * @access  protected
+     * @return  string     The exception message
+     */
+    public function __toString()
+    {
+        return '<strong>Pagination Class Error:</strong> '.$this->message.PHP_EOL;
+    }
 }
 
 
