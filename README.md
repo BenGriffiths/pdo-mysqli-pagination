@@ -2,10 +2,6 @@
 
 PDO MySQLi Pagination class is a PHP pagination class that will work with either PDO, or MySQLi. The outputted pagination is served in an Unordered List, and the options are extensive.
 
-### Contribute
-
-I'd love to see other people's contributions, so please fork away and submit any pull requests!
-
 ## Options
 
 All you need to do is include the file, set the options, and then you can work with the data as is. Here's the different options that are available:
