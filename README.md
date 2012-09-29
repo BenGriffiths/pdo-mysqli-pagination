@@ -25,7 +25,8 @@ $options = array(
     'class_dead_links'              => 'dead-link',  
     'class_live_links'              => 'live-link',  
     'class_current_page'            => 'current-link',  
-    'class_ul'                      => 'pagination',  
+    'class_ul'                      => 'pagination',
+    'current_page_is_link'          => true,
     'show_links_first_last'         => true,  
     'show_links_prev_next'          => true,  
     'show_links_first_last_if_dead' => true,  
@@ -56,6 +57,7 @@ Here's the description for each of those options:
 * __class_live_links__: The class to apply to any regular links
 * __class_current_page__: The class to apply to the current page link
 * __class_ul__: The class to apply to the whole UL
+* __current_page_is_link__: If set to false, the number for the current page will not be a link
 * __show_links_first_last__: Set to 1 to show the 'first/last' links
 * __show_links_prev_next__: Set to 1 to show the 'prev/next' links
 * __show_links_first_last_if_dead__: If the 'first/last' links are dead, set to 1 to still show them

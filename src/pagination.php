@@ -41,6 +41,7 @@ class pagination
         'class_live_links'              => 'live-link',
         'class_current_page'            => 'current-link',
         'class_ul'                      => 'pagination',
+        'current_page_is_link'          => true,
         'show_links_first_last'         => true,
         'show_links_prev_next'          => true,
         'show_links_first_last_if_dead' => true,
@@ -640,7 +641,14 @@ class pagination
         
         while($counter <= $finish)
         {
-            $this->links_html .= '<li><a href="'.$this->build_link_url($counter).'" class="'.$this->get_current_or_normal_class($counter).'">'.$counter.'</a></li>'.PHP_EOL;
+            if($this->options['current_page_is_link'] == false && $counter == $this->current_page)
+            {
+                $this->links_html .= '<li><span class="'.$this->get_current_or_normal_class($counter).'">'.$counter.'</span></li>'.PHP_EOL;
+            }
+            else
+            {
+                $this->links_html .= '<li><a href="'.$this->build_link_url($counter).'" class="'.$this->get_current_or_normal_class($counter).'">'.$counter.'</a></li>'.PHP_EOL;
+            }
             
             $counter++;
         }
