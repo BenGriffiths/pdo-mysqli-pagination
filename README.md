@@ -30,7 +30,7 @@ $options = array(
     'show_links_prev_next'          => true,  
     'show_links_first_last_if_dead' => true,  
     'show_links_prev_next_if_dead'  => true,  
-    'max_links_between_ellipses'    => 7,      // This MUST be an odd number, io things will break
+    'max_links_between_ellipses'    => 7,      // This MUST be an odd number, or things will break :/
     'max_links_outside_ellipses'    => 2,  
     'db_conn_type'                  => 'pdo',  // Can be either: 'mysqli' or 'pdo'
     'db_handle'                     => 0  
@@ -40,7 +40,7 @@ $options = array(
 ?>
 ```
 
-Here's the full list of options, and the descriptions for each:
+Here's the description for each of those options:
 
 * __results_per_page__: The total number of results to show per page
 * __max_pages_to_fetch__: You can limit the number of pages to fetch in total here
@@ -173,7 +173,7 @@ if($pagination->success == true)
 
 ## Named Params in PDO
 
-When using named params, you simply need to add the array to the options like so:
+When using named params, you simply need to add the array of parameters to the options array, like this:
 
 
 ```php
@@ -188,7 +188,7 @@ $options = array(
 
 ## Bind Params in PDO
 
-Binding params work's a little differently, you need to tell the class that you'll want to be binding params, and then bind them - the class will not execute the query automatically like it does in all other ways of functioning. I have kept the naming convention of bindParam to help make it easier to use the system without having to remember what the method names are. Once you're done binding, you can then execute manually:
+Binding params work's a little differently, you need to tell the class that you'll want to be binding params, and then bind them - the class will not execute the query automatically like it does in all other ways of functioning. I have kept the naming convention of bindParam to help make it easier to use the system without having to remember what the method names are. Once you're done binding, you can then execute the query manually:
 
 
 ```php
@@ -219,6 +219,6 @@ $pagination->execute();
 
 ## License
 
-Copyright (c) 2012 Ben Griffiths
+Copyright (c) 2012 Ben Griffiths (http://www.ben-griffiths.com)
 
 Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
