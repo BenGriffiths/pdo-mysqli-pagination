@@ -306,7 +306,7 @@ class pagination
          */
         if(substr($this->query, 0, 26) != 'SELECT SQL_CALC_FOUND_ROWS')
         {
-            $this->query = substr_replace($this->query, 'SELECT SQL_CALC_FOUND_ROWS', 0, 6);
+            $this->query = substr_replace(trim($this->query), 'SELECT SQL_CALC_FOUND_ROWS', 0, 6);
         }
         
         /*
