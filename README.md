@@ -235,7 +235,7 @@ $options = array(
 
 try
 {
-    $pagination = new pagination($page, 'SELECT * FROM table WHERE field_a > ?, $options);  
+    $pagination = new pagination($page, 'SELECT * FROM table WHERE field_a > ?', $options);  
 }
 catch(paginationException $e)
 {
