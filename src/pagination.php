@@ -51,7 +51,8 @@ class pagination
         'db_conn_type'                  => 'pdo',  /* Can be either: 'mysqli' or 'pdo' */
         'db_handle'                     => 0,
         'named_params'                  => false,
-        'using_bound_params'            => false
+        'using_bound_params'            => false,
+        'using_bound_values'            => false
     );
     
     
@@ -125,6 +126,15 @@ class pagination
      * @var    int
      */
     public $total_pages;
+    
+    
+    /**
+     * The pagination links (as an array)
+     *
+     * @access public
+     * @var    array
+     */
+    public $links_array;
     
     
     /**
@@ -349,7 +359,7 @@ class pagination
         }
         elseif($this->options['db_conn_type'] == 'pdo')
         {    
-            if($this->options['using_bound_params'] == false)
+            if($this->options['using_bound_params'] == false && $this->options['using_bound_values'] == false)
             {
                 /*
                  * Execute using PDO - not using bindParams
@@ -399,7 +409,7 @@ class pagination
     
     
     /**
-     * bind(standard params)
+     * bindParam(standard params)
      *
      * Bind params to the query
      *
@@ -410,6 +420,21 @@ class pagination
     public function bindParam($a = null, $b = null, $c = null, $d = null, $e = null)
     {
         $this->pdos->bindParam($a, $b, $c, $d, $e);
+    }
+    
+    
+    /**
+     * bindValue(standard params)
+     *
+     * Bind values to the query
+     *
+     * @access  public
+     * @param   multi   Typical bindValue attr
+     * @return  void
+     */
+    public function bindValue($a = null, $b = null, $c = null)
+    {
+        $this->pdos->bindValue($a, $b, $c);
     }
     
     
@@ -606,6 +631,13 @@ class pagination
             {
                 $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url(1).'">'.$this->options['text_first'].'</a></li>'.PHP_EOL;
             }
+            
+            $this->links_array['extras']['first'] = array(
+                'page_number'     => 1,
+                'is_current_page' => ($this->current_page == 1 ? 1 : 0),
+                'link_url'        => $this->build_link_url(1),
+                'label'           => $this->options['text_first']
+            );
         }
         
         /*
@@ -621,6 +653,13 @@ class pagination
             {
                 $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url($this->current_page - 1).'">'.$this->options['text_prev'].'</a></li>'.PHP_EOL;
             }
+            
+            $this->links_array['extras']['previous'] = array(
+                'page_number'     => ($this->current_page != 1 ? $this->current_page - 1 : 1),
+                'is_current_page' => ($this->current_page == 1 ? 1 : 0),
+                'link_url'        => ($this->current_page != 1 ? $this->build_link_url($this->current_page - 1) : $this->build_link_url(1)),
+                'label'           => $this->options['text_prev']
+            );
         }
     }
     
@@ -635,7 +674,7 @@ class pagination
      * @param   int     $finish  The number to finish looping
      * @return  void
      */
-    protected function loop_through_links($start, $finish)
+    protected function loop_through_links($start, $finish, $array_block_label = '')
     {
         $counter = $start;
         
@@ -649,6 +688,12 @@ class pagination
             {
                 $this->links_html .= '<li><a href="'.$this->build_link_url($counter).'" class="'.$this->get_current_or_normal_class($counter).'">'.$counter.'</a></li>'.PHP_EOL;
             }
+            
+            $this->links_array['links'][$array_block_label][] = array(
+                'page_number'     => $counter,
+                'is_current_page' => ($counter == $this->current_page ? 1 : 0),
+                'link_url'        => $this->build_link_url($counter)
+            );
             
             $counter++;
         }
@@ -682,7 +727,7 @@ class pagination
         /*
          * If there's not enough links to have an ellipses in the set, just run through them all
          */
-        $this->loop_through_links(1, $this->total_pages);
+        $this->loop_through_links(1, $this->total_pages, 0);
     }
     
     
@@ -699,11 +744,11 @@ class pagination
         /*
          * Type 1 - skipping the first ellipses due to being low in the current page number
          */
-        $this->loop_through_links(1, ($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses']));
+        $this->loop_through_links(1, ($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses']), 0);
         
         $this->add_ellipses();
         
-        $this->loop_through_links((($this->total_pages - $this->options['max_links_outside_ellipses']) + 1), $this->total_pages);
+        $this->loop_through_links((($this->total_pages - $this->options['max_links_outside_ellipses']) + 1), $this->total_pages, 1);
     }
     
     
@@ -720,17 +765,17 @@ class pagination
         /*
          * Type 2 - Current page is between both sets of ellipses
          */
-        $this->loop_through_links(1, $this->options['max_links_outside_ellipses']);
+        $this->loop_through_links(1, $this->options['max_links_outside_ellipses'], 0);
         
         $this->add_ellipses();
         
         $before_after = (($this->options['max_links_between_ellipses'] - 1) / 2);
         
-        $this->loop_through_links(($this->current_page - $before_after), ($this->current_page + $before_after));
+        $this->loop_through_links(($this->current_page - $before_after), ($this->current_page + $before_after), 1);
         
         $this->add_ellipses();
         
-        $this->loop_through_links((($this->total_pages - $this->options['max_links_outside_ellipses']) + 1), $this->total_pages);
+        $this->loop_through_links((($this->total_pages - $this->options['max_links_outside_ellipses']) + 1), $this->total_pages, 2);
     }
     
     
@@ -747,11 +792,11 @@ class pagination
         /*
          * Type 3 - skipping the last ellipses due to being high in the current page number
          */
-        $this->loop_through_links(1, $this->options['max_links_outside_ellipses']);
+        $this->loop_through_links(1, $this->options['max_links_outside_ellipses'], 0);
         
         $this->add_ellipses();
         
-        $this->loop_through_links((($this->total_pages - ($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses'])) + 1), $this->total_pages);
+        $this->loop_through_links((($this->total_pages - ($this->options['max_links_between_ellipses'] + $this->options['max_links_outside_ellipses'])) + 1), $this->total_pages, 1);
     }
     
     
@@ -778,6 +823,13 @@ class pagination
             {
                 $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url($this->current_page + 1).'">'.$this->options['text_next'].'</a></li>'.PHP_EOL;
             }
+            
+            $this->links_array['extras']['next'] = array(
+                'page_number'     => ($this->current_page != $this->total_pages ? $this->current_page + 1 : $this->total_pages),
+                'is_current_page' => ($this->current_page == $this->total_pages ? 1 : 0),
+                'link_url'        => ($this->current_page != $this->total_pages ? $this->build_link_url($this->current_page + 1) : $this->build_link_url($this->total_pages)),
+                'label'           => $this->options['text_next']
+            );
         }
         
         /*
@@ -793,6 +845,13 @@ class pagination
             {
                 $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url($this->total_pages).'">'.$this->options['text_last'].'</a></li>'.PHP_EOL;
             }
+            
+            $this->links_array['extras']['last'] = array(
+                'page_number'     => $this->total_pages,
+                'is_current_page' => ($this->current_page == $this->total_pages ? 1 : 0),
+                'link_url'        => $this->build_link_url($this->total_pages),
+                'label'           => $this->options['text_last']
+            );
         }
     }
 

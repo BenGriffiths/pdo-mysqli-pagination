@@ -36,7 +36,8 @@ $options = array(
     'db_conn_type'                  => 'pdo',  // Can be either: 'mysqli' or 'pdo'
     'db_handle'                     => 0  
     'named_params'                  => false,  
-    'using_bound_params'            => false  
+    'using_bound_params'            => false,
+    'using_bound_values'            => false
 );
 ?>
 ```
@@ -68,6 +69,7 @@ Here's the description for each of those options:
 * __db_handle__: The database handle object
 * __named_params__: An array for named params (See below)
 * __using_bound_params__: Set to true if you are using bound params in PDO
+* __using_bound_values__: Set to true if you are using bound values in PDO
 
 ## Using the class
 
@@ -188,7 +190,7 @@ $options = array(
 ?>
 ```
 
-## Bind Params in PDO
+## Bind Params and Bind Values in PDO
 
 Binding params work's a little differently, you need to tell the class that you'll want to be binding params, and then bind them - the class will not execute the query automatically like it does in all other ways of functioning. I have kept the naming convention of bindParam to help make it easier to use the system without having to remember what the method names are. Once you're done binding, you can then execute the query manually:
 
@@ -216,6 +218,168 @@ $pagination->bindParam(':param_b', 'bar');
   
 $pagination->execute();
 ?>
+```
+
+### Bind Values in PDO
+
+Binding values works in pretty much the same way as bindParam, however you'll need to use a slightly different option in the config too:
+
+
+```php
+<?
+$options = array(  
+    'url'                => 'http://www.mysite.com/mypage.php?page=*VAR*',  
+    'db_handle'          => $dbh,  
+    'using_bound_values' => true  
+);  
+
+try
+{
+    $pagination = new pagination($page, 'SELECT * FROM table WHERE field_a > ?, $options);  
+}
+catch(paginationException $e)
+{
+    echo $e;
+    exit();
+}
+  
+$pagination->bindValue(1, 10, PDO::PARAM_INT);  
+  
+$pagination->execute();
+?>
+```
+
+
+## Page links as an array
+
+You can also retrieve the links for the pagaintion as an array. The 'extras' part contains the first/last and prev/next link data. The 'links' part contains the regular paginated links. The links section is further broken down to up to 3 more sections. Each section would be seperated by an ellipses or other type of break depending on how you have set up the class.
+
+To fetch it, use: 
+
+```php
+<?
+
+$links_data = $pagination->links_array;
+
+?>
+```
+
+The data would look something along the lines of this:
+
+```
+Array
+(
+    [extras] => Array
+        (
+            [first] => Array
+                (
+                    [page_number] => 1
+                    [is_current_page] => 0
+                    [link_url] => http://www.example.com/example_pdo.php?page=1
+                    [label] => << First
+                )
+
+            [previous] => Array
+                (
+                    [page_number] => 22
+                    [is_current_page] => 0
+                    [link_url] => http://www.example.com/example_pdo.php?page=22
+                    [label] => < Prev
+                )
+
+            [next] => Array
+                (
+                    [page_number] => 24
+                    [is_current_page] => 0
+                    [link_url] => http://www.example.com/example_pdo.php?page=24
+                    [label] => Next >
+                )
+
+            [last] => Array
+                (
+                    [page_number] => 34
+                    [is_current_page] => 0
+                    [link_url] => http://www.example.com/example_pdo.php?page=34
+                    [label] => Last >>
+                )
+
+        )
+
+    [links] => Array
+        (
+            [0] => Array
+                (
+                    [0] => Array
+                        (
+                            [page_number] => 1
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=1
+                        )
+
+                    [1] => Array
+                        (
+                            [page_number] => 2
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=2
+                        )
+
+                )
+
+            [1] => Array
+                (
+                    [0] => Array
+                        (
+                            [page_number] => 20
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=20
+                        )
+
+                    [1] => Array
+                        (
+                            [page_number] => 21
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=21
+                        )
+
+                    ... snipped ...
+
+                    [5] => Array
+                        (
+                            [page_number] => 25
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=25
+                        )
+
+                    [6] => Array
+                        (
+                            [page_number] => 26
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=26
+                        )
+
+                )
+
+            [2] => Array
+                (
+                    [0] => Array
+                        (
+                            [page_number] => 33
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=33
+                        )
+
+                    [1] => Array
+                        (
+                            [page_number] => 34
+                            [is_current_page] => 0
+                            [link_url] => http://www.example.com/example_pdo.php?page=34
+                        )
+
+                )
+
+        )
+
+)
 ```
 
 
