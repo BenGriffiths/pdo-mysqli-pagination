@@ -42,7 +42,7 @@ require_once('../src/pagination.php');
 */
 try
 {
-    $dbh = new PDO('mysql:host=localhost;dbname=jokes', 'stevenmw', '5beb811');
+    $dbh = new PDO('mysql:host='xxx';dbname='xxx, 'xxx', 'xxx');
 	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
