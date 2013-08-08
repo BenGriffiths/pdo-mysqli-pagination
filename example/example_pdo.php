@@ -21,7 +21,8 @@
         color: #000000;
     }
     
-</style><?
+</style>
+<?
 
 
 /*
@@ -42,8 +43,8 @@ require_once('../src/pagination.php');
 */
 try
 {
-    $dbh = new PDO('mysql:host='xxx';dbname='xxx, 'xxx', 'xxx');
-	$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+     $dbh = new PDO('mysql:host=XXXXXX;dbname=XXXXXX', 'XXXXXX', 'XXXXXX');
+     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }
 catch(PDOException $e)
 {
