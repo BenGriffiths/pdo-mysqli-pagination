@@ -385,6 +385,6 @@ Array
 
 ## License
 
-Copyright (c) 2012 Ben Griffiths (http://www.ben-griffiths.com)
+Copyright (c) 2012 Ben Griffiths (http://www.appliedorder.com)
 
 Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
