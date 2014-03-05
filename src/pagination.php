@@ -608,6 +608,18 @@ class pagination
     }
 
 
+    /**
+     * build_li_element(string $class, string $text, bool $is_link, int $page_number)
+     *
+     * Builds LI elements
+     *
+     * @access  protected
+     * @param   string     $class        The class to apply to the LI
+     * @param   string     $text         The text for the LI element
+     * @param   bool       $is_link      If this is a link or not
+     * @param   int        $page_number  The page number to use (if a link)
+     * @return  void
+     */
     public function build_li_element($class, $text, $is_link = false, $page_number = 0)
     {
         if($is_link == false)
