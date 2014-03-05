@@ -625,11 +625,11 @@ class pagination
         {
             if($this->current_page == 1 && $this->options['show_links_first_last_if_dead'] == true)
             {
-                $this->links_html .= '<li><span class="'.$this->options['class_dead_links'].'">'.$this->options['text_first'].'</span></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_dead_links'].'"><span>'.$this->options['text_first'].'</span></li>'.PHP_EOL;
             }
             elseif($this->current_page != 1)
             {
-                $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url(1).'">'.$this->options['text_first'].'</a></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_live_links'].'"><a href="'.$this->build_link_url(1).'">'.$this->options['text_first'].'</a></li>'.PHP_EOL;
             }
             
             $this->links_array['extras']['first'] = array(
@@ -647,11 +647,11 @@ class pagination
         {
             if($this->current_page == 1 && $this->options['show_links_prev_next_if_dead'] == true)
             {
-                $this->links_html .= '<li><span class="'.$this->options['class_dead_links'].'">'.$this->options['text_prev'].'</span></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_dead_links'].'"><span>'.$this->options['text_prev'].'</span></li>'.PHP_EOL;
             }
             elseif($this->current_page != 1)
             {
-                $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url($this->current_page - 1).'">'.$this->options['text_prev'].'</a></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_live_links'].'"><a href="'.$this->build_link_url($this->current_page - 1).'">'.$this->options['text_prev'].'</a></li>'.PHP_EOL;
             }
             
             $this->links_array['extras']['previous'] = array(
@@ -682,11 +682,11 @@ class pagination
         {
             if($this->options['current_page_is_link'] == false && $counter == $this->current_page)
             {
-                $this->links_html .= '<li><span class="'.$this->get_current_or_normal_class($counter).'">'.$counter.'</span></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->get_current_or_normal_class($counter).'"><span >'.$counter.'</span></li>'.PHP_EOL;
             }
             else
             {
-                $this->links_html .= '<li><a href="'.$this->build_link_url($counter).'" class="'.$this->get_current_or_normal_class($counter).'">'.$counter.'</a></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->get_current_or_normal_class($counter).'"><a href="'.$this->build_link_url($counter).'">'.$counter.'</a></li>'.PHP_EOL;
             }
             
             $this->links_array['links'][$array_block_label][] = array(
@@ -710,7 +710,7 @@ class pagination
      */
     protected function add_ellipses()
     {
-        $this->links_html .= '<li><span class="'.$this->options['class_ellipses'].'">'.$this->options['text_ellipses'].'</span></li>'.PHP_EOL;
+        $this->links_html .= '<li  class="'.$this->options['class_ellipses'].'"><span>'.$this->options['text_ellipses'].'</span></li>'.PHP_EOL;
     }
     
     
@@ -817,11 +817,11 @@ class pagination
         {
             if($this->current_page == $this->total_pages && $this->options['show_links_prev_next_if_dead'] == true)
             {
-                $this->links_html .= '<li><span class="'.$this->options['class_dead_links'].'">'.$this->options['text_next'].'</span></li>'.PHP_EOL;
+                $this->links_html .= '<li  class="'.$this->options['class_dead_links'].'"><span>'.$this->options['text_next'].'</span></li>'.PHP_EOL;
             }
             elseif($this->current_page != $this->total_pages)
             {
-                $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url($this->current_page + 1).'">'.$this->options['text_next'].'</a></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_live_links'].'"><a href="'.$this->build_link_url($this->current_page + 1).'">'.$this->options['text_next'].'</a></li>'.PHP_EOL;
             }
             
             $this->links_array['extras']['next'] = array(
@@ -839,11 +839,11 @@ class pagination
         {
             if($this->current_page == $this->total_pages && $this->options['show_links_first_last_if_dead'] == true)
             {
-                $this->links_html .= '<li><span class="'.$this->options['class_dead_links'].'">'.$this->options['text_last'].'</span></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_dead_links'].'"><span>'.$this->options['text_last'].'</span></li>'.PHP_EOL;
             }
             elseif($this->current_page != $this->total_pages)
             {
-                $this->links_html .= '<li><a class="'.$this->options['class_live_links'].'" href="'.$this->build_link_url($this->total_pages).'">'.$this->options['text_last'].'</a></li>'.PHP_EOL;
+                $this->links_html .= '<li class="'.$this->options['class_live_links'].'"><a href="'.$this->build_link_url($this->total_pages).'">'.$this->options['text_last'].'</a></li>'.PHP_EOL;
             }
             
             $this->links_array['extras']['last'] = array(
