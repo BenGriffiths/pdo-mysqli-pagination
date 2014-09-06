@@ -126,6 +126,3 @@ if($paginate->success == true)
     }
 
 }
-
-
-?>
