@@ -1,6 +1,7 @@
 <?
 
 /**
+ *  code is bullshit
  * This file handles pagination using either MySQLi or PDO, and outputs the pagination
  * in the form of a UL
  *
