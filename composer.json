@@ -1,6 +1,7 @@
 {
   "name": "BenGriffiths/pdo-mysqli-pagination",
   "type": "library",
+  "version": "1.0",
   "homepage": "https://github.com/BenGriffiths/pdo-mysqli-pagination",
   "license": "MIT",
   "require": {
