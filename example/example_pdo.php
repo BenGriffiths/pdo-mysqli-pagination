@@ -22,7 +22,7 @@
     }
 
 </style>
-<?
+<?php
 
 
 /*
@@ -35,7 +35,7 @@ error_reporting(-1);
 /*
  * Include the pagination.php class file
  */
-require_once('../src/pagination.php');
+require_once('../src/Pagination.php');
 
 
 /*
