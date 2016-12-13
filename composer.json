@@ -1,4 +1,7 @@
 {
   "name": "BenGriffiths/pdo-mysqli-pagination",
-  "version": "dev-master"
+  "version": "dev-master",
+  "autoload": {
+    "psr-0": {"PDO-MySQLi-Pagination": "src/"}
+  }
 }
