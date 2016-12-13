@@ -2,10 +2,8 @@
   "name": "BenGriffiths/pdo-mysqli-pagination",
   "version": "dev-master",
   "autoload": {
-    "psr-0": {
-      "classmap": [
-        "src/"
-      ]
-    }
+    "classmap": [
+      "src/"
+    ]
   }
 }
