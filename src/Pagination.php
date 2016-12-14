@@ -1,4 +1,4 @@
-<?
+<?php
 
 /**
  * This file handles pagination using either MySQLi or PDO, and outputs the pagination
@@ -16,7 +16,7 @@
  *
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-class pagination
+class Pagination
 {
 
 

@@ -1,0 +1,9 @@
+{
+  "name": "BenGriffiths/pdo-mysqli-pagination",
+  "version": "dev-master",
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  }
+}
