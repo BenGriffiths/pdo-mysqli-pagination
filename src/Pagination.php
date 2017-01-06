@@ -316,7 +316,18 @@ class Pagination
          */
         if(substr($this->query, 0, 26) != 'SELECT SQL_CALC_FOUND_ROWS')
         {
+          /*
+          * Support for queries starting with "(", mostly used when UNION
+          */
+
+          if(substr($this->query, 0, 1) == '(')
+          {
+            $this->query = substr_replace(trim($this->query), '(SELECT SQL_CALC_FOUND_ROWS', 0, 7);
+          }
+          else
+          {
             $this->query = substr_replace(trim($this->query), 'SELECT SQL_CALC_FOUND_ROWS', 0, 6);
+          }
         }
 
         /*
