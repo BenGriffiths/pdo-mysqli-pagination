@@ -1,3 +1,7 @@
+# Notice
+
+This package is no longer maintained - I have also removed the License.
+
 # PDO and MySQLi PHP Pagination Class
 
 PDO MySQLi Pagination class is a PHP pagination class that will work with either PDO, or MySQLi. The outputted pagination is served in an Unordered List, and the options are extensive.
@@ -385,6 +389,4 @@ Array
 
 ## License
 
-Copyright (c) 2012 Ben Griffiths (http://www.appliedorder.com)
-
-Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
+No License - feel free to do what you want with the code.
