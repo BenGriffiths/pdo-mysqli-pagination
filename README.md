@@ -1,6 +1,8 @@
 # Notice
 
-This package is no longer maintained - I have also removed the License so you're free to do whatever you like with the code in any fashion you want.
+```diff
+- This package is no longer maintained - I have also removed the License so you're free to do whatever you like with the code in any fashion you want.
+```
 
 # PDO and MySQLi PHP Pagination Class
 
